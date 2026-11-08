@@ -373,6 +373,9 @@ static void app_frame_build(const uint16_t *src,const uint8_t *dig)
 	//数字位图
 	memcpy(&g_frame[F_DIG],dig,39u);
 	//帧头
+  g_frame[F_HEAD0]=0xAAu;
+  g_frame[F_HEAD1]=0x55u;
+  g_frame[F_NPTS]=(uint8_t)APP_NPTS;
 	g_frame[F_SEQ]=seq;
 	g_frame[F_FLAGS]=(uint8_t)(ch_en & 0x1Fu);//没有触发
 	g_frame[F_DIV]=div;
@@ -458,10 +461,6 @@ static void app_init(void)
 {
     //帧静态段
     memset(g_frame,0,sizeof(g_frame));
-    g_frame[F_HEAD0]=0xAAu;
-    g_frame[F_HEAD1]=0x55u;
-    g_frame[F_NPTS]=(uint8_t)APP_NPTS;
-    g_frame[F_TAIL]=0x5Au;
     //档位
     app_apply_div(0u);
     //矩形波发生器
